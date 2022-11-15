@@ -79,7 +79,7 @@ function App() {
           //},
         }}
       >
-        <Paper elevation={6}>
+        <Paper elevation={6} >
           <Stack spacing={1} sx={{ padding: "25px" }}>
             <Typography variant="h4" align="center" gutterBottom>KRISTOSHKA</Typography>
             <SelectFood food={food} setFood={setFood} />
