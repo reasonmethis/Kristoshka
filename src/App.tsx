@@ -1,4 +1,6 @@
 import { Box, Paper, Stack, Typography } from "@mui/material";
+import CssBaseline from "@mui/material/CssBaseline";
+import { createTheme, ThemeProvider } from "@mui/material/styles";
 import { useState } from "react";
 import "./App.css";
 import Results from "./Results";
@@ -12,6 +14,12 @@ import units from "./UnitData";
 
 const DECIMALS = 2;
 const CUP_TO_TSPS = 48;
+
+const darkTheme = createTheme({
+  palette: {
+    mode: "dark",
+  },
+});
 
 const formatNum = (num: number, decimals: number) =>
   num.toLocaleString("en-US", {
@@ -67,26 +75,35 @@ function App() {
 
   const [amtInUnitsToStr, nCaloriesStr] = convert();
   return (
-    <>
+    <ThemeProvider theme={darkTheme}>
+      <CssBaseline />
+
       <Box
         id="outerbox"
         sx={{
           //m: 0
           //flexWrap: 'wrap',
           //"& > :not(style)": {
-            //m: 10,
-            maxWidth: 400,
-            width: "98vw",
+          //m: 10,
+          maxWidth: 400,
+          width: "98vw",
           //},
         }}
       >
-        <Paper elevation={6} >
-          <Stack spacing={2} sx={{ padding: "25px" }}>
-            <Typography variant="h4" align="center" gutterBottom>KRISTOSHKA</Typography>
+        <Paper elevation={6}>
+          <Stack spacing={2} sx={{ padding: "20px" }}>
+            <Typography variant="h4" align="center" gutterBottom>
+              KRISTOSHKA
+            </Typography>
             <SelectFood food={food} setFood={setFood} />
             <SelectUnits unit={unit} setUnit={setUnit} />
             <SelectUnitsTo unitTo={unitTo} setUnitTo={setUnitTo} />
-            <SelectQuantity amt={amt} setAmt={setAmt} amtStr={amtStr} setAmtStr={setAmtStr}/>
+            <SelectQuantity
+              amt={amt}
+              setAmt={setAmt}
+              amtStr={amtStr}
+              setAmtStr={setAmtStr}
+            />
             <Results
               res={[
                 `${amt} ${unit}`,
@@ -97,7 +114,7 @@ function App() {
           </Stack>
         </Paper>
       </Box>
-    </>
+    </ThemeProvider>
   );
 }
 

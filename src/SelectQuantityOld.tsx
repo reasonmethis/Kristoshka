@@ -1,4 +1,5 @@
-import { Box, Slider, Stack, TextField } from "@mui/material";
+import Box from "@mui/material/Box";
+import TextField from "@mui/material/TextField";
 import { ChangeEvent } from "react";
 //import Select, { SelectChangeEvent } from '@mui/material/Select';
 //import ChangeEvent
@@ -9,23 +10,17 @@ interface SelectQuantityPropT {
   setAmtStr: (amtStr: string) => void;
 }
 
-const MAX_AMT = 12;
-const MAX_LENGTH = 5;
-
 export default function SelectQuantity(props: SelectQuantityPropT) {
-  const handleSliderChange = (event: Event, newValue: number | number[]) => {
-    if (typeof newValue !== "number") return;
-    newValue = Math.round((newValue * MAX_AMT * 4) / 100) / 4;
-    props.setAmt(newValue);
-    props.setAmtStr(newValue.toString());
-  };
-
+  //ChangeEventHandler<HTMLInputElement | HTMLTextAreaElement>
+  //ChangeEvent<HTMLInputElement>
+  //React.ChangeEvent<HTMLTextAreaElement | HTMLInputElement>
+  const MAX_LENGTH = 5;
   const handleChange = (
     event: ChangeEvent<HTMLTextAreaElement | HTMLInputElement>
   ) => {
     //Have to do some awkward validation - would be much easier with input type text,
     //but I want the type to be numeric so browsers default to numeric kbrd
-    let val: string = event.target.value;
+    const val: string = event.target.value;
     const isInvalid = val === "" && !event.target.checkValidity(); //checkvalidity is
     //false for "0.1" with default step, see below
     //validity attr contains more detailed info
@@ -46,25 +41,31 @@ export default function SelectQuantity(props: SelectQuantityPropT) {
     } else {
       const num = Number(val);
       console.log("val", val, "num", num);
-      if (val[0] === ".") {
-        val = "0" + val; //otherwise if user deletes 3 from ".3"
-        //input will become invalid and the above procedure will restore prev value "0.3"
-        event.target.value = val
-    }
       props.setAmt(num);
       props.setAmtStr(val);
+      if (val[0] === ".") {
+        event.target.value = "0" + val; //otherwise if user deletes 3 from ".3"
+        //input will become invalid and the above procedure will restore prev value "0.3"
+      }
     }
   };
 
   return (
-    <Stack direction="row" spacing={2} alignItems="center">
-      <Box component="form" noValidate autoComplete="off" flex={1.5}>
+    <>
+      <Box
+        component="form"
+        //sx={{
+        //  "& > :not(style)": { m: 1, width: "25ch" },
+        //}}
+        noValidate
+        autoComplete="off"
+      >
         <TextField
           id="select-quantity"
           label="Amt"
           type="number"
           defaultValue={1}
-          value={props.amt}
+          sx={{ width: "25%" }}
           InputLabelProps={{
             shrink: true,
           }}
@@ -76,16 +77,6 @@ export default function SelectQuantity(props: SelectQuantityPropT) {
           onChange={handleChange}
         />
       </Box>
-      <Box flex={4}>
-        <Slider
-          value={
-            (props.amt * 100) /
-            MAX_AMT /*typeof value === "number" ? value : 0*/
-          }
-          onChange={handleSliderChange}
-          aria-labelledby="input-slider"
-        />
-      </Box>
-    </Stack>
+    </>
   );
 }
