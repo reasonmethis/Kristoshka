@@ -24,6 +24,7 @@ function App() {
   const [unit, setUnit] = useState(units[0].name);
   const [unitTo, setUnitTo] = useState("grams");
   const [amt, setAmt] = useState(1);
+  const [amtStr, setAmtStr] = useState("1");
   const convert = () => {
     const foodObj = foods.find((f) => f.name === food);
     const unitObj = units.find((u) => u.name === unit);
@@ -80,12 +81,12 @@ function App() {
         }}
       >
         <Paper elevation={6} >
-          <Stack spacing={1} sx={{ padding: "25px" }}>
+          <Stack spacing={2} sx={{ padding: "25px" }}>
             <Typography variant="h4" align="center" gutterBottom>KRISTOSHKA</Typography>
             <SelectFood food={food} setFood={setFood} />
             <SelectUnits unit={unit} setUnit={setUnit} />
             <SelectUnitsTo unitTo={unitTo} setUnitTo={setUnitTo} />
-            <SelectQuantity amt={amt} setAmt={setAmt} />
+            <SelectQuantity amt={amt} setAmt={setAmt} amtStr={amtStr} setAmtStr={setAmtStr}/>
             <Results
               res={[
                 `${amt} ${unit}`,
