@@ -1,14 +1,14 @@
 {
   "files": {
     "main.css": "/kristoshka/static/css/main.31d6cfe0.css",
-    "main.js": "/kristoshka/static/js/main.3bc8fefc.js",
+    "main.js": "/kristoshka/static/js/main.6a87527c.js",
     "static/js/787.23766159.chunk.js": "/kristoshka/static/js/787.23766159.chunk.js",
     "index.html": "/kristoshka/index.html",
-    "main.3bc8fefc.js.map": "/kristoshka/static/js/main.3bc8fefc.js.map",
+    "main.6a87527c.js.map": "/kristoshka/static/js/main.6a87527c.js.map",
     "787.23766159.chunk.js.map": "/kristoshka/static/js/787.23766159.chunk.js.map"
   },
   "entrypoints": [
     "static/css/main.31d6cfe0.css",
-    "static/js/main.3bc8fefc.js"
+    "static/js/main.6a87527c.js"
   ]
 }
