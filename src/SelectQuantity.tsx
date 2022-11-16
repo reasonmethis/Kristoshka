@@ -14,6 +14,7 @@ const MAX_LENGTH = 5;
 
 export default function SelectQuantity(props: SelectQuantityPropT) {
   const handleSliderChange = (event: Event, newValue: number | number[]) => {
+    //console.log("slider chng", newValue)
     if (typeof newValue !== "number") return;
     newValue = Math.round((newValue * MAX_AMT * 4) / 100) / 4;
     props.setAmt(newValue);
@@ -41,6 +42,7 @@ export default function SelectQuantity(props: SelectQuantityPropT) {
 
     //if new value in the textbox doesn't conform to what we want, reset it to the current amt
     if (val.length > MAX_LENGTH || val.includes("-") || isInvalid) {
+      console.log(val, props.amtStr);
       event.target.value = props.amtStr; //.toString() //TODO - store previous string val and use it
       //otherwise 0.0008 becomes 0 since previous val="0.000" corresponds to amt 0
     } else {
@@ -49,8 +51,13 @@ export default function SelectQuantity(props: SelectQuantityPropT) {
       if (val[0] === ".") {
         val = "0" + val; //otherwise if user deletes 3 from ".3"
         //input will become invalid and the above procedure will restore prev value "0.3"
+        event.target.value = val;
+      }
+      // replace "04" with "4" ("0" can't just be erased because of value prop on textfield)
+      if (val[0] === "0" && val[1] && val[1] !==".") {
+        val = val.slice(1)
         event.target.value = val
-    }
+      }
       props.setAmt(num);
       props.setAmtStr(val);
     }
@@ -58,18 +65,21 @@ export default function SelectQuantity(props: SelectQuantityPropT) {
 
   return (
     <Stack direction="row" spacing={2} alignItems="center">
-      <Box component="form" noValidate autoComplete="off" flex={1.5}>
+      <Box component="form" noValidate autoComplete="off" flex={1.4}>
         <TextField
           id="select-quantity"
           label="Amt"
           type="number"
           defaultValue={1}
-          value={props.amt}
+          value={props.amt} //this causes "0" to not be eraseable
           InputLabelProps={{
             shrink: true,
           }}
           inputProps={{
             inputMode: "numeric",
+            min: 0,
+            max: 99999,
+            step: 0.25,
             //placeholder: "Select quantity",
             //pattern: '/?\d+(\.\d+)/g'
           }}
