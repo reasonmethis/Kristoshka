@@ -65,7 +65,7 @@ export default function SelectQuantity(props: SelectQuantityPropT) {
 
   return (
     <Stack direction="row" spacing={2} alignItems="center">
-      <Box component="form" noValidate autoComplete="off" flex={1.4}>
+      <Box component="form" noValidate autoComplete="off" flex={1.4} maxWidth={"4.6rem"}>
         <TextField
           id="select-quantity"
           label="Amt"

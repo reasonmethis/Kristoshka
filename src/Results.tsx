@@ -9,7 +9,10 @@ export default function Results({res}: ResType) {
         {res[0]}
       </Typography>
       <Typography align="center" variant="body1" gutterBottom >
-        {res[1]}, {res[2]}
+        {res[1]}
+      </Typography>
+      <Typography align="center" variant="body1" gutterBottom >
+        {res[2]}
       </Typography>
     </Box>
   );

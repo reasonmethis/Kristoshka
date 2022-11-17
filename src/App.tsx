@@ -12,7 +12,6 @@ import SelectUnitsTo from "./SelectUnitsTo";
 import foods from "./FoodData";
 import units from "./UnitData";
 
-const DECIMALS = 2;
 const CUP_TO_TSPS = 48;
 
 const darkTheme = createTheme({
@@ -21,11 +20,33 @@ const darkTheme = createTheme({
   },
 });
 
-const formatNum = (num: number, decimals: number) =>
-  num.toLocaleString("en-US", {
+const formatNum = (num: number): string => {
+  if (Math.round(num / 1000000000) >= 1000) {
+    return "MANY";
+  }
+  if (Math.round(num / 1000000) >= 1000) {
+    return formatNum(num / 1000000000) + "B";
+  }
+  if (Math.round(num / 1000) >= 1000) {
+    return formatNum(num / 1000000) + "M";
+  }
+  if (Math.round(num) > 9999) {
+    return formatNum(num / 1000) + "k";
+  }
+  if (Math.round(num * 10) >= 1000) { //99.95 -> "100"
+    return Math.round(num).toString();
+  }
+  if (Math.round(num * 100) >= 1000) { //99.94 -> "99.9"
+    return (Math.round(num * 10) / 10).toString();
+  }
+  if (Math.round(num * 1000) >= 1000) {
+    return (Math.round(num * 100) / 100).toString();
+  }
+  return (Math.round(num * 1000) / 1000).toString();
+  /*num.toLocaleString("en-US", {
     minimumFractionDigits: 1,
-    maximumFractionDigits: decimals,
-  });
+    maximumFractionDigits: decimals,*/
+};
 
 function App() {
   const [food, setFood] = useState("Water");
@@ -55,7 +76,7 @@ function App() {
     }
     //calculate calories
     const grams2calories = foodObj.cup2calories / foodObj.cup2grams;
-    const nCaloriesStr = Math.round(amtInGrams * grams2calories).toString();
+    const nCaloriesStr = formatNum(amtInGrams * grams2calories)
 
     //calculate amt in final units
     let amtInBaseUnitsTo: number;
@@ -68,7 +89,7 @@ function App() {
     }
     //convert from base units (3g -> 0.003kg)
     return [
-      formatNum(amtInBaseUnitsTo / unitToObj.nBaseUnits, DECIMALS),
+      formatNum(amtInBaseUnitsTo / unitToObj.nBaseUnits),
       nCaloriesStr,
     ];
   };
