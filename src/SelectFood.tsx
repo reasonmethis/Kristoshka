@@ -1,18 +1,17 @@
-import Box from '@mui/material/Box';
-import InputLabel from '@mui/material/InputLabel';
-import MenuItem from '@mui/material/MenuItem';
-import FormControl from '@mui/material/FormControl';
-import Select, { SelectChangeEvent } from '@mui/material/Select';
+import Box from "@mui/material/Box";
+import FormControl from "@mui/material/FormControl";
+import InputLabel from "@mui/material/InputLabel";
+import MenuItem from "@mui/material/MenuItem";
+import Select, { SelectChangeEvent } from "@mui/material/Select";
 
-import foods from './FoodData'
+import foods from "./FoodData";
 
 interface selectFoodPropT {
-    food: string,
-    setFood: (food: string) => void//React.Dispatch<React.SetStateAction<string>>
-  }
- 
-export default function SelectFood({food, setFood}: selectFoodPropT) {
+  food: string;
+  setFood: (food: string) => void; //React.Dispatch<React.SetStateAction<string>>
+}
 
+export default function SelectFood({ food, setFood }: selectFoodPropT) {
   const handleChange = (event: SelectChangeEvent) => {
     setFood(event.target.value as string);
   };
@@ -28,10 +27,11 @@ export default function SelectFood({food, setFood}: selectFoodPropT) {
           label="Ingredient"
           onChange={handleChange}
         >
-          {foods.map((food) => <MenuItem value={food.name}>{food.name}</MenuItem>)}
+          {foods.map((food) => (
+            <MenuItem key={food.name} value={food.name}>{food.name}</MenuItem>
+          ))}
         </Select>
       </FormControl>
     </Box>
   );
 }
-

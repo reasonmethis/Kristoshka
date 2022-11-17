@@ -31,7 +31,7 @@ export default function SelectUnitsTo({
           onChange={handleChange}
         >
           {units.map((unit) => (
-            <MenuItem value={unit.name}>{unit.name}</MenuItem>
+            <MenuItem key={unit.name} value={unit.name}>{unit.name}</MenuItem>
           ))}
         </Select>
       </FormControl>

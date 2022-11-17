@@ -28,7 +28,7 @@ const handleChange = (event: SelectChangeEvent) => {
           label="Units"
           onChange={handleChange}
         >
-          {units.map((unit) => <MenuItem value={unit.name}>{unit.name}</MenuItem>)}
+          {units.map((unit) => <MenuItem key={unit.name} value={unit.name}>{unit.name}</MenuItem>)}
         </Select>
       </FormControl>
     </Box>
